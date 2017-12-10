@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {Observable} from 'rxjs/Observable';
-import {AuthService} from 'auth.service';
+import {AuthService} from '../services/auth.service';
 import * as firebase from 'firebase/app';
 
 import {ChatMessage} from '../models/chat-message.model';
@@ -43,14 +43,14 @@ export class ChatService {
 
     getMessages(): AngularFireList<ChatMessage[]>
     {
-        return this.db.list('messages', ref => ref.limitToLast(25).orderByKey()).valueChanges();
+        return this.db.list('messages', ref => ref.limitToLast(25).orderByKey());
     }
 
 
     getTimeStamp() {
         const now = new Date();
         const date = now.getUTCFullYear() + '/' +
-                    (now.getUTCMonth() + 1) +
+                    (now.getUTCMonth() + 1) + '/' +
                     now.getUTCDate();
 
         const time = now.getUTCHours() + ':' +
