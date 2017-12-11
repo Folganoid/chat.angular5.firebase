@@ -15,6 +15,7 @@ export class MessageComponent implements OnInit {
   userName: string;
   messageContent: string;
   timeStamp: Date = new Date();
+  isOwnMessage: boolean;
 
   constructor() { }
 
