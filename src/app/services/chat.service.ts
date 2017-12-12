@@ -14,7 +14,7 @@ export class ChatService {
     user: firebase.User;
     chatMessages: AngularFireList<ChatMessage[]>;
     chatMessage: ChatMessage;
-    userName: Observable<string>;
+    userName: any;
 
     constructor(private db: AngularFireDatabase,
                 private afAuth: AngularFireAuth) {
@@ -55,19 +55,18 @@ export class ChatService {
 
     getMessages(): AngularFireList<ChatMessage[]>
     {
-        return this.db.list('messages', ref => ref.limitToLast(25).orderByKey());
+        return this.db.list('message', ref => ref.limitToLast(25).orderByKey());
     }
-
 
     getTimeStamp() {
         const now = new Date();
         const date = now.getUTCFullYear() + '/' +
-                    (now.getUTCMonth() + 1) + '/' +
-                    now.getUTCDate();
+            (now.getUTCMonth() + 1) + '/' +
+            now.getUTCDate();
 
         const time = now.getUTCHours() + ':' +
-                    now.getUTCMinutes() + ':' +
-                    now.getUTCSeconds();
+            now.getUTCMinutes() + ':' +
+            now.getUTCSeconds();
 
         return (date + ' ' + time);
     }

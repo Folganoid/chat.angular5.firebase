@@ -22,19 +22,29 @@ export class AuthService {
       return this.user;
   }
 
-
   get currentUserId(): string {
     return this.authState !== null ? this.authState.uid : '';
   }
 
-  login(email: string, password: string) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-        .then((resolve) => {
-          const status = 'online';
-          this.setUserStatus(status);
-          this.router.navigate((['chat']));
-        })
-  }
+    login(email: string, password: string) {
+        return this.afAuth.auth.signInWithEmailAndPassword(email, password)
+            .then((user) => {
+                this.authState = user;
+                this.setUserStatus('online');
+                this.router.navigate(['chat']);
+            });
+    }
+
+    logout() {
+        const temp = this.currentUserId;
+        this.afAuth.auth.signOut()
+            .then((user) => {
+                this.authState = user;
+                this.setUserStatus('offline', temp);
+            this.router.navigate(['login']);
+        });
+
+    }
 
   signUp(email: string, password: string, displayName: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
@@ -56,14 +66,16 @@ export class AuthService {
 
     this.db.object(path).update(data)
         .catch(error => console.log(error));
-
   }
 
-    setUserStatus(status: string): void {
-        const path = `users/${this.currentUserId}`;
+    setUserStatus(status: string, temp = this.currentUserId): void {
+        const path = `users/${temp}`;
         const data = {
             status: status
         };
+
+        this.db.object(path).update(data)
+            .catch(error => console.log(error));
     }
 
 }

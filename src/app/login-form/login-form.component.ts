@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { AuthService } from "../services/auth.service";
+import {User} from "firebase";
 
 @Component({
   selector: 'app-login-form',
@@ -7,7 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor() { }
+    email: string;
+    password: string;
+    errorMsg: string;
+    user: any;
+
+    constructor(private authService: AuthService, private router: Router) {
+    }
+
+
+
+    logIn(){
+
+        const password = this.password;
+        const email = this.email;
+        this.authService.login(email, password)
+            .then(resolve => this.router.navigate(['chat']))
+            .catch(error => this.errorMsg = error.message)
+    }
 
   ngOnInit() {
   }

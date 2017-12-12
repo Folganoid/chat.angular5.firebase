@@ -23,7 +23,7 @@ import { ChatService } from './services/chat.service';
 import { AuthService } from './services/auth.service';
 
 import {appRoutes} from "../routes";
-import {environment} from '../environments/environment'
+import {environment} from '../environments/environment';
 
 
 @NgModule({
@@ -37,7 +37,7 @@ import {environment} from '../environments/environment'
     SignupFormComponent,
     NavbarComponent,
     UserListComponent,
-    UserItemComponent
+    UserItemComponent,
   ],
   imports: [
     BrowserModule,
